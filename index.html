@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مطاحن بن أولاد عيد - أصل القهوة العربية في مصر</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Tahoma,Arial,sans-serif}
+body{background:#0a0a0a;color:#fff;line-height:1.6}
+header{background:linear-gradient(180deg,#1a1a1a,#0a0a0a);border-bottom:3px solid #FFD700;padding:22px 15px;text-align:center}
+.badge{background:#FFD700;color:#0a0a0a;padding:4px 16px;border-radius:20px;font-weight:bold;font-size:.9rem;display:inline-block;margin-bottom:8px}
+header h1{color:#FFD700;font-size:2.2rem;font-weight:900}
+header .slogan{color:#fff;font-size:1.15rem;margin-top:4px;font-weight:bold}
+header .desc{color:#b3b3b3;font-size:.95rem;max-width:600px;margin:8px auto 0}
+nav{display:flex;justify-content:center;background:#141414;border-bottom:2px solid #2c2c2c;position:sticky;top:0;z-index:999}
+.nav-btn{background:transparent;border:none;color:#fff;padding:15px 22px;font-size:1.05rem;font-weight:bold;cursor:pointer;border-bottom:4px solid transparent}
+.nav-btn:hover,.nav-btn.active{color:#FFD700;border-bottom:4px solid #FFD700;background:rgba(255,215,0,.08)}
+.container{max-width:1150px;margin:25px auto;padding:0 15px;min-height:60vh}
+.sec{display:none}.sec.active{display:block}
+.title{color:#FFD700;font-size:1.6rem;margin-bottom:18px;border-right:5px solid #FFD700;padding-right:12px}
+.card{background:#161616;border:1px solid #333;border-radius:12px;padding:20px;margin-bottom:20px}
+.fg{margin-bottom:14px}.fg label{display:block;margin-bottom:5px;color:#FFD700;font-weight:bold}
+.fg input,.fg textarea{width:100%;padding:11px;background:#222;border:1px solid #444;border-radius:8px;color:#fff;font-size:1rem}
+.fg input:focus,.fg textarea:focus{outline:none;border-color:#FFD700}
+.btn{background:#FFD700;color:#0a0a0a;border:none;padding:11px 20px;font-size:1rem;font-weight:bold;border-radius:8px;cursor:pointer}
+.btn:hover{background:#e6c200}.btn-red{background:#dc3545;color:#fff}.btn-org{background:#ff9800;color:#000}.btn-grn{background:#28a745;color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
+.offer{background:#161616;border:2px solid #2c2c2c;border-radius:12px;padding:18px;display:flex;flex-direction:column;justify-content:space-between}
+.offer:hover{border-color:#FFD700}.offer h3{color:#FFD700;font-size:1.3rem;margin-bottom:8px}
+.price{font-size:1.45rem;font-weight:900;margin:10px 0}
+.phone-box{background:#222;color:#FFD700;text-align:center;padding:7px;border-radius:6px;margin-top:10px;font-weight:bold;border:1px dashed #FFD700}
+.qty{display:flex;align-items:center;gap:10px;margin:10px 0}.qty input{width:75px;padding:7px;background:#222;border:1px solid #FFD700;color:#fff;border-radius:6px;text-align:center;font-weight:bold}
+.twrap{overflow-x:auto}table{width:100%;border-collapse:collapse;margin-top:10px;background:#1a1a1a}
+th,td{padding:11px;text-align:right;border-bottom:1px solid #333}th{background:#FFD700;color:#0a0a0a;font-weight:bold}
+.banner{background:rgba(255,215,0,.12);border:1px solid #FFD700;padding:14px;border-radius:8px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+footer{background:#050505;border-top:2px solid #FFD700;text-align:center;padding:22px 15px;margin-top:45px}
+footer p{color:#b3b3b3;margin-bottom:5px}footer .dev{color:#FFD700;font-weight:bold;font-size:1.15rem;margin-top:8px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="badge">خبرة منذ عام ١٩٨٥</div>
+  <h1>مطاحن بن أولاد عيد</h1>
+  <p class="slogan">☕ القهوة العربية - أصل القهوة العربية في مصر ☕</p>
+  <p class="desc">ننتقي أجود حبوب البن العالمية ونحمصها بعناية فائقة لنقدم لك فنجان قهوة يليق بمزاجك الأصيل منذ أكثر من ٤٠ عاماً.</p>
+</header>
+
+<nav>
+  <button type="button" id="b-home" class="nav-btn active">🏠 الرئيسية والعروض</button>
+  <button type="button" id="b-cust" class="nav-btn">👤 دخول العملاء</button>
+  <button type="button" id="b-admin" class="nav-btn">⚙️ الإدارة</button>
+</nav>
+
+<div class="container">
+  <!-- 1. الرئيسية والعروض -->
+  <div id="s-home" class="sec active">
+    <div id="custBanner" class="banner"></div>
+    <h2 class="title">أحدث عروض مطاحن بن أولاد عيد</h2>
+    <div id="offersGrid" class="grid"></div>
+  </div>
+
+  <!-- 2. دخول العملاء -->
+  <div id="s-cust" class="sec">
+    <h2 class="title">تسجيل بيانات العميل للطلب</h2>
+    <div class="card" style="max-width:500px;margin:0 auto">
+      <p style="margin-bottom:14px;color:#b3b3b3">سجّل بياناتك مرة واحدة لتتمكن من طلب العروض وتوصيلها لعنوانك مباشرة.</p>
+      <form id="fCust">
+        <div class="fg"><label>الاسم بالكامل *</label><input type="text" id="cName" required placeholder="اكتب اسمك هنا"></div>
+        <div class="fg"><label>رقم التليفون / الواتساب *</label><input type="tel" id="cPhone" required placeholder="010xxxxxxxx"></div>
+        <div class="fg"><label>العنوان بالتفصيل *</label><textarea id="cAddr" rows="3" required placeholder="المنطقة - الشارع - رقم العقار"></textarea></div>
+        <button type="submit" class="btn" style="width:100%">حفظ البيانات والدخول للعروض</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 3. الإدارة -->
+  <div id="s-admin" class="sec">
+    <div id="loginBox" class="card" style="max-width:400px;margin:0 auto;text-align:center">
+      <h3 style="color:#FFD700;margin-bottom:14px">دخول لوحة تحكم الإدارة</h3>
+      <div class="fg"><input type="password" id="passIn" placeholder="كلمة مرور المدير (Muhammad2005)"></div>
+      <button type="button" id="btnLogin" class="btn" style="width:100%">دخول لوحة التحكم</button>
+    </div>
+
+    <div id="adminBox" style="display:none">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px">
+        <h2 class="title" style="margin:0">لوحة تحكم مطاحن بن أولاد عيد</h2>
+        <div>
+          <button type="button" id="btnBackup" class="btn btn-grn">💾 حفظ نسخة احتياطية</button>
+          <button type="button" id="btnLogout" class="btn btn-red">خروج</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 id="formHead" style="color:#FFD700;margin-bottom:14px">➕ إضافة عرض جديد</h3>
+        <form id="fOffer">
+          <input type="hidden" id="editId">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px">
+            <div class="fg"><label>اسم العرض / الصنف *</label><input type="text" id="oTitle" required placeholder="مثال: عرض ١ كيلو بن محوج"></div>
+            <div class="fg"><label>السعر (جنيه) *</label><input type="number" id="oPrice" required placeholder="450"></div>
+          </div>
+          <div class="fg"><label>تفاصيل العرض *</label><textarea id="oDesc" rows="2" required placeholder="تفاصيل العرض والوزن"></textarea></div>
+          <button type="submit" id="btnSaveO" class="btn">نشر العرض الآن</button>
+          <button type="button" id="btnCancelO" class="btn btn-org" style="display:none">إلغاء التعديل</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <h3 style="color:#FFD700;margin-bottom:12px">📦 العروض الحالية (تعديل / إيقاف / حذف)</h3>
+        <div class="twrap"><table><thead><tr><th>العرض</th><th>التفاصيل</th><th>السعر</th><th>الحالة</th><th>التحكم</th></tr></thead><tbody id="tbOffers"></tbody></table></div>
+      </div>
+
+      <div class="card">
+        <h3 style="color:#FFD700;margin-bottom:12px">🔔 الطلبات الجديدة (قيد التوصيل)</h3>
+        <div class="twrap"><table><thead><tr><th>الوقت والتاريخ</th><th>العميل</th><th>التليفون</th><th>العنوان</th><th>العرض</th><th>الكمية</th><th>الإجمالي</th><th>الإجراء</th></tr></thead><tbody id="tbPend"></tbody></table></div>
+      </div>
+
+      <div class="card">
+        <h3 style="color:#28a745;margin-bottom:12px">✅ سجل التوصيلات المحفوظ في النظام</h3>
+        <div class="twrap"><table><thead><tr><th>وقت الطلب</th><th>وقت التوصيل</th><th>العميل</th><th>التليفون</th><th>العنوان</th><th>الطلب</th><th>الإجمالي</th></tr></thead><tbody id="tbDone"></tbody></table></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p><strong>مطاحن بن أولاد عيد</strong> - خبرة منذ عام ١٩٨٥ | أصل القهوة العربية في مصر</p>
+  <p>للطلبات والاستفسارات: <strong style="color:#FFD700">01061216062</strong></p>
+  <p class="dev">تنفيذ المهندس محمد رضوان</p>
+</footer>
+
+<script>
+const PHONE="01061216062", PASS="Muhammad2005";
+let mem={};
+const getDB=(k,d)=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return mem[k]||d}};
+const setDB=(k,v)=>{mem[k]=v;try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+
+if(!getDB("eid_offers",null)){
+  setDB("eid_offers",[
+    {id:1,title:"عرض الافتتاح - ١ كيلو بن محوج مخصوص",desc:"توليفة أولاد عيد الأصلية بالحبوب الفاخرة والحبهان",price:480,active:true},
+    {id:2,title:"عرض المزاج - نصف كيلو ساده + ربع محوج",desc:"تحميص وسط طازج يومياً",price:320,active:true},
+    {id:3,title:"عرض القهوة العربية الملكي",desc:"خلطة القهوة العربية الأصيلة بالزعفران والهيل",price:550,active:true}
+  ]);
+}
+
+function goTab(t){
+  ["home","cust","admin"].forEach(x=>{
+    document.getElementById("s-"+x).classList.toggle("active",x===t);
+    document.getElementById("b-"+x).classList.toggle("active",x===t);
+  });
+  if(t==="home")renderHome();
+  if(t==="cust"){const c=getDB("eid_cust",null);if(c){cName.value=c.name;cPhone.value=c.phone;cAddr.value=c.addr;}}
+  if(t==="admin")renderAdmin();
+}
+document.getElementById("b-home").onclick=()=>goTab("home");
+document.getElementById("b-cust").onclick=()=>goTab("cust");
+document.getElementById("b-admin").onclick=()=>goTab("admin");
+
+document.getElementById("fCust").onsubmit=e=>{
+  e.preventDefault();
+  const c={name:cName.value.trim(),phone:cPhone.value.trim(),addr:cAddr.value.trim()};
+  setDB("eid_cust",c);
+  void("تم تسجيل بياناتك بنجاح يا "+c.name);
+  goTab("home");
+};
+function renderHome(){
+  const c=getDB("eid_cust",null), b=document.getElementById("custBanner");
+  b.innerHTML=c?`<div>مرحباً <strong>${c.name}</strong> | العنوان: <strong>${c.addr}</strong></div><button type="button" class="btn" style="padding:5px 14px" onclick="goTab('cust')">تعديل بياناتي</button>`:
+  `<div>⚠️ <strong>تنبيه:</strong> سجل اسمك ورقمك وعنوانك أولاً لطلب الأوردر.</div><button type="button" class="btn" style="padding:5px 14px" onclick="goTab('cust')">سجل بياناتك الآن</button>`;
+  const g=document.getElementById("offersGrid"); g.innerHTML="";
+  getDB("eid_offers",[]).forEach(o=>{
+    if(!o.active)return;
+    g.innerHTML+=`<div class="offer"><div><h3>${o.title}</h3><p style="color:#b3b3b3">${o.desc}</p><div class="price">${o.price} جنيه</div></div>
+    <div><div class="qty"><label>الكمية:</label><input type="number" id="q_${o.id}" value="1" min="1"></div>
+    <button type="button" class="btn" style="width:100%" onclick="orderNow(${o.id})">اطلب الأوردر الآن 🛒</button>
+    <div class="phone-box">📞 للطلب المباشر: ${PHONE}</div></div></div>`;
+  });
+}
+
+function orderNow(id){
+  const c = getDB("eid_cust", null);
+  if(!c){ goTab("cust"); return; }
+  const o = getDB("eid_offers", []).find(x => x.id === id);
+  const qty = parseInt(document.getElementById("q_" + id).value) || 1;
+  const tot = o.price * qty;
+  const now = new Date();
+  const time = now.toLocaleDateString("ar-EG") + " - " + now.toLocaleTimeString("ar-EG", {hour:"2-digit", minute:"2-digit"});
+  
+  const ords = getDB("eid_orders", []);
+  ords.unshift({id:Date.now(), time, name:c.name, phone:c.phone, addr:c.addr, title:o.title, qty, tot, status:"pending"});
+  setDB("eid_orders", ords);
+
+  document.getElementById("orderPopup").style.display = "flex";
+}
+
+let logged=false;
+document.getElementById("btnLogin").onclick=()=>{
+  if(document.getElementById("passIn").value.trim()===PASS){logged=true;document.getElementById("passIn").value="";renderAdmin();}
+  else void("كلمة المرور غير صحيحة! اكتب: "+PASS);
+};
+document.getElementById("btnLogout").onclick=()=>{logged=false;renderAdmin();};
+
+function renderAdmin(){
+  document.getElementById("loginBox").style.display=logged?"none":"block";
+  document.getElementById("adminBox").style.display=logged?"block":"none";
+  if(!logged)return;
+  const tbO=document.getElementById("tbOffers"); tbO.innerHTML="";
+  getDB("eid_offers",[]).forEach(o=>{
+    tbO.innerHTML+=`<tr><td><strong>${o.title}</strong></td><td>${o.desc}</td><td>${o.price} ج.م</td>
+    <td>${o.active?'<span style="color:#28a745">نشط</span>':'<span style="color:#dc3545">متوقف</span>'}</td>
+    <td style="display:flex;gap:5px;flex-wrap:wrap">
+      <button type="button" class="btn" style="padding:4px 9px;font-size:.85rem" onclick="editO(${o.id})">تعديل</button>
+      <button type="button" class="btn btn-org" style="padding:4px 9px;font-size:.85rem" onclick="togO(${o.id})">${o.active?'إيقاف':'تشغيل'}</button>
+      <button type="button" class="btn btn-red" style="padding:4px 9px;font-size:.85rem" onclick="delO(${o.id})">حذف</button>
+    </td></tr>`;
+  });
+  const tbP=document.getElementById("tbPend"), tbD=document.getElementById("tbDone");
+  tbP.innerHTML=""; tbD.innerHTML="";
+  getDB("eid_orders",[]).forEach(r=>{
+    if(r.status==="pending"){
+      tbP.innerHTML+=`<tr><td>${r.time}</td><td><strong>${r.name}</strong></td><td>${r.phone}</td><td>${r.addr}</td><td>${r.title}</td><td>${r.qty}</td><td><strong>${r.tot} ج.م</strong></td>
+      <td><button type="button" class="btn btn-grn" style="padding:5px 10px;font-size:.85rem" onclick="doneOrd(${r.id})">✅ تم التوصيل</button></td></tr>`;
+    }else{
+      tbD.innerHTML+=`<tr><td>${r.time}</td><td>${r.delTime||"-"}</td><td>${r.name}</td><td>${r.phone}</td><td>${r.addr}</td><td>${r.title} (×${r.qty})</td><td><strong>${r.tot} ج.م</strong></td></tr>`;
+    }
+  });
+}
+
+document.getElementById("fOffer").onsubmit=e=>{
+  e.preventDefault();
+  const id=document.getElementById("editId").value, title=oTitle.value.trim(), price=Number(oPrice.value), desc=oDesc.value.trim();
+  let list=getDB("eid_offers",[]);
+  list=id?list.map(x=>x.id==id?{...x,title,price,desc}:x):[{id:Date.now(),title,price,desc,active:true},...list];
+  setDB("eid_offers",list); resetO(); renderAdmin(); void("تم حفظ العرض بنجاح!");
+};
+function editO(id){
+  const o=getDB("eid_offers",[]).find(x=>x.id===id); if(!o)return;
+  editId.value=o.id; oTitle.value=o.title; oPrice.value=o.price; oDesc.value=o.desc;
+  formHead.innerText="✏️ تعديل العرض"; btnSaveO.innerText="حفظ التعديلات"; btnCancelO.style.display="inline-block";
+}
+function resetO(){fOffer.reset();editId.value="";formHead.innerText="➕ إضافة عرض جديد";btnSaveO.innerText="نشر العرض الآن";btnCancelO.style.display="none";}
+document.getElementById("btnCancelO").onclick=resetO;
+function togO(id){setDB("eid_offers",getDB("eid_offers",[]).map(x=>x.id===id?{...x,active:!x.active}:x));renderAdmin();}
+function delO(id){setDB("eid_offers",getDB("eid_offers",[]).filter(x=>x.id!==id));renderAdmin();}
+function doneOrd(id){
+  const now=new Date(), delTime=now.toLocaleDateString("ar-EG")+" - "+now.toLocaleTimeString("ar-EG",{hour:"2-digit",minute:"2-digit"});
+  setDB("eid_orders",getDB("eid_orders",[]).map(x=>x.id===id?{...x,status:"done",delTime}:x));
+  renderAdmin(); void("تم نقل الطلب لسجل التوصيلات المحفوظ!");
+}
+document.getElementById("btnBackup").onclick=()=>{
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob([JSON.stringify({offers:getDB("eid_offers",[]),orders:getDB("eid_orders",[])},null,2)],{type:"application/json"}));
+  a.download="بيانات_اولاد_عيد.json"; a.click();
+};
+renderHome();
+</script>
+<!-- شاشة تأكيد الطلب الأنيقة -->
+<div id="orderPopup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999; justify-content:center; align-items:center; padding:20px;">
+  <div style="background:#161616; border:3px solid #FFD700; border-radius:15px; padding:30px; max-width:420px; width:100%; text-align:center; box-shadow:0 0 25px rgba(255,215,0,0.3);">
+    <div style="font-size:3.5rem; margin-bottom:10px;">✅</div>
+    <h2 style="color:#FFD700; font-size:1.6rem; margin-bottom:10px;">تم طلب الأوردر بنجاح!</h2>
+    <p style="color:#fff; font-size:1.15rem; margin-bottom:20px;">تم تسجيل طلبك وسيتم التواصل معك في أسرع وقت.</p>
+    <button type="button" onclick="document.getElementById('orderPopup').style.display='none'" style="background:#FFD700; color:#0a0a0a; border:none; padding:12px 30px; font-size:1.1rem; font-weight:bold; border-radius:8px; cursor:pointer; width:100%;">حسناً</button>
+  </div>
+</div>
+</body>
+</html>
