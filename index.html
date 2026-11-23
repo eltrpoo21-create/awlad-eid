@@ -157,240 +157,245 @@ footer p{color:#b3b3b3;margin-bottom:5px}footer .dev{color:#FFD700;font-weight:b
   </div>
 </div>
 
-<script type="module">
-   import { initializeApp } from "https://gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getDatabase, ref, set, onValue } from "https://gstatic.com/firebasejs/10.12.2/firebase-database.js";
+<script>
+const DB = "https://awlad-eid-39138-default-rtdb.firebaseio.com";
+const SHOP_NUM = "01061216062";
+const ADMIN_PASS = "Muhammad2005";
 
-  const app = initializeApp({
-    databaseURL: "https://awlad-eid-39138-default-rtdb.firebaseio.com"
+let offers = [];
+let orders = [];
+let logged = false;
+
+const getCust = () => { try { return JSON.parse(localStorage.getItem("eid_cust")); } catch (e) { return null; } };
+const setCust = (c) => { try { localStorage.setItem("eid_cust", JSON.stringify(c)); } catch (e) {} };
+
+function goTab(t) {
+  ["home", "cust", "admin"].forEach(x => {
+    document.getElementById("s-" + x).classList.toggle("active", x === t);
+    document.getElementById("b-" + x).classList.toggle("active", x === t);
   });
-  const db = getDatabase(app);
-
-
-  const SHOP_NUM = "01061216062";
-  const ADMIN_PASS = "Muhammad2005";
-
-  let offers = [];
-  let orders = [];
-  let logged = false;
-
-  onValue(ref(db, "offers"), (snap) => {
-    const data = snap.val();
-    offers = data ? (Array.isArray(data) ? data.filter(Boolean) : Object.values(data)) : [];
-    renderHome();
-    if (logged) renderAdmin();
-  }, (err) => {
-    alert("خطأ في قراءة العروض: " + err.message);
-  });
-
-  onValue(ref(db, "orders"), (snap) => {
-    const data = snap.val();
-    orders = data ? (Array.isArray(data) ? data.filter(Boolean) : Object.values(data)) : [];
-    if (logged) renderAdmin();
-  });
-
-  async function saveOffersCloud() {
-    try {
-      await set(ref(db, "offers"), offers);
-    } catch (e) {
-      alert("خطأ أثناء حفظ العروض: " + e.message);
-    }
-  }
-
-  async function saveOrdersCloud() {
-    try {
-      await set(ref(db, "orders"), orders);
-    } catch (e) {
-      alert("خطأ أثناء إرسال الطلب: " + e.message);
-    }
-  }
-
-  function compressImg(file) {
-    return new Promise(res => {
-      const r = new FileReader();
-      r.onload = e => {
-        const img = new Image();
-        img.onload = () => {
-          const c = document.createElement("canvas");
-          const w = 400;
-          c.width = img.width > w ? w : img.width;
-          c.height = img.width > w ? img.height * (w / img.width) : img.height;
-          c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
-          res(c.toDataURL("image/jpeg", 0.6));
-        };
-        img.src = e.target.result;
-      };
-      r.readAsDataURL(file);
-    });
-  }
-
-  const getCust = () => { try { return JSON.parse(localStorage.getItem("eid_cust")); } catch (e) { return null; } };
-  const setCust = (c) => { try { localStorage.setItem("eid_cust", JSON.stringify(c)); } catch (e) {} };
-
-  window.goTab = function(t) {
-    ["home", "cust", "admin"].forEach(x => {
-      document.getElementById("s-" + x).classList.toggle("active", x === t);
-      document.getElementById("b-" + x).classList.toggle("active", x === t);
-    });
-    if (t === "home") renderHome();
-    if (t === "cust") {
-      const c = getCust();
-      if (c) { cName.value = c.name; cPhone.value = c.phone; cAddr.value = c.addr; }
-    }
-    if (t === "admin") renderAdmin();
-  };
-
-  document.getElementById("b-home").onclick = () => goTab("home");
-  document.getElementById("b-cust").onclick = () => goTab("cust");
-  document.getElementById("b-admin").onclick = () => goTab("admin");
-
-  document.getElementById("fCust").onsubmit = e => {
-    e.preventDefault();
-    setCust({ name: cName.value.trim(), phone: cPhone.value.trim(), addr: cAddr.value.trim() });
-    goTab("home");
-  };
-
-  function renderHome() {
-    const c = getCust(), b = document.getElementById("custBanner");
-    b.innerHTML = c ? `<div>مرحباً <strong>${c.name}</strong> | العنوان: <strong>${c.addr}</strong></div><button type="button" class="btn" style="padding:5px 14px" onclick="goTab('cust')">تعديل بياناتي</button>` :
-      `<div>⚠️ <strong>تنبيه:</strong> سجل اسمك ورقمك وعنوانك أولاً لطلب الأوردر.</div><button type="button" class="btn" style="padding:5px 14px" onclick="goTab('cust')">سجل بياناتك الآن</button>`;
-
-    const g = document.getElementById("offersGrid");
-    g.innerHTML = "";
-    const activeOffers = offers.filter(o => o && o.active !== false);
-    if (activeOffers.length === 0) {
-      g.innerHTML = `<p style="color:#b3b3b3">لا توجد عروض منشورة حالياً.</p>`;
-      return;
-    }
-    activeOffers.forEach(o => {
-      const imgTag = o.img ? `<img src="${o.img}" style="width:100%;height:200px;object-fit:cover;border-radius:8px;margin-bottom:10px;border:1px solid #333">` : '';
-      g.innerHTML += `<div class="offer"><div>${imgTag}<h3>${o.title}</h3><p style="color:#b3b3b3">${o.desc}</p><div class="price">${o.price} جنيه</div></div>
-      <div><div class="qty"><label>الكمية:</label><input type="number" id="q_${o.id}" value="1" min="1"></div>
-      <button type="button" class="btn" style="width:100%" onclick="orderNow(${o.id})">اطلب الأوردر الآن 🛒</button>
-      <div class="phone-box">📞 للطلب المباشر: ${SHOP_NUM}</div></div></div>`;
-    });
-  }
-
-  window.orderNow = async function(id) {
+  if (t === "home") { renderHome(); syncCloud(); }
+  if (t === "cust") {
     const c = getCust();
-    if (!c) { goTab("cust"); return; }
-    const o = offers.find(x => x.id === id);
-    const qty = parseInt(document.getElementById("q_" + id).value) || 1;
-    const tot = o.price * qty;
-    const now = new Date();
-    const time = now.toLocaleDateString("ar-EG") + " - " + now.toLocaleTimeString("ar-EG", { hour: "2-digit", minute: "2-digit" });
-
-    orders.unshift({ id: Date.now(), time, name: c.name, phone: c.phone, addr: c.addr, title: o.title, qty, tot, status: "pending" });
-    await saveOrdersCloud();
-    document.getElementById("orderPopup").style.display = "flex";
-  };
-
-  document.getElementById("btnLogin").onclick = () => {
-    if (document.getElementById("passIn").value === ADMIN_PASS) {
-      logged = true;
-      document.getElementById("loginBox").style.display = "none";
-      document.getElementById("adminBox").style.display = "block";
-      renderAdmin();
-    } else { alert("كلمة المرور غير صحيحة!"); }
-  };
-
-  document.getElementById("btnLogout").onclick = () => {
-    logged = false;
-    document.getElementById("passIn").value = "";
-    document.getElementById("loginBox").style.display = "block";
-    document.getElementById("adminBox").style.display = "none";
-  };
-
-  document.getElementById("btnRefresh").onclick = () => {
-    renderAdmin();
-    alert("البيانات متصلة لحظياً بالسيرفر!");
-  };
-
-  function renderAdmin() {
-    if (!logged) return;
-    const tbO = document.getElementById("tbOffers"); tbO.innerHTML = "";
-    offers.forEach(o => {
-      if (!o) return;
-      const thumb = o.img ? `<img src="${o.img}" style="width:45px;height:45px;object-fit:cover;border-radius:6px">` : '-';
-      tbO.innerHTML += `<tr><td>${thumb}</td><td><strong>${o.title}</strong></td><td>${o.desc}</td><td>${o.price} ج.م</td>
-      <td>${o.active !== false ? '<span style="color:#28a745">نشط</span>' : '<span style="color:#dc3545">متوقف</span>'}</td>
-      <td style="display:flex;gap:5px;flex-wrap:wrap">
-        <button type="button" class="btn" style="padding:4px 9px;font-size:.85rem" onclick="editO(${o.id})">تعديل</button>
-        <button type="button" class="btn btn-org" style="padding:4px 9px;font-size:.85rem" onclick="togO(${o.id})">${o.active !== false ? 'إيقاف' : 'تشغيل'}</button>
-        <button type="button" class="btn btn-red" style="padding:4px 9px;font-size:.85rem" onclick="delO(${o.id})">حذف</button>
-      </td></tr>`;
-    });
-
-    const tbP = document.getElementById("tbPend"), tbD = document.getElementById("tbDone");
-    tbP.innerHTML = ""; tbD.innerHTML = "";
-    orders.forEach(r => {
-      if (!r) return;
-      if (r.status === "pending") {
-        tbP.innerHTML += `<tr><td>${r.time}</td><td><strong>${r.name}</strong></td><td>${r.phone}</td><td>${r.addr}</td><td>${r.title}</td><td>${r.qty}</td><td><strong>${r.tot} ج.م</strong></td>
-        <td><button type="button" class="btn btn-grn" style="padding:5px 10px;font-size:.85rem" onclick="doneOrd(${r.id})">✅ تم التوصيل</button></td></tr>`;
-      } else {
-        tbD.innerHTML += `<tr><td>${r.time}</td><td>${r.delTime || "-"}</td><td>${r.name}</td><td>${r.phone}</td><td>${r.addr}</td><td>${r.title} (×${r.qty})</td><td><strong>${r.tot} ج.م</strong></td></tr>`;
-      }
-    });
+    if (c) { cName.value = c.name; cPhone.value = c.phone; cAddr.value = c.addr; }
   }
+  if (t === "admin") { renderAdmin(); syncCloud(); }
+}
 
-  document.getElementById("fOffer").onsubmit = async e => {
-    e.preventDefault();
-    const btn = document.getElementById("btnSaveO");
-    btn.disabled = true; btn.innerText = "جاري الحفظ...";
+document.getElementById("b-home").onclick = () => goTab("home");
+document.getElementById("b-cust").onclick = () => goTab("cust");
+document.getElementById("b-admin").onclick = () => goTab("admin");
 
-    const id = document.getElementById("editId").value;
-    const title = oTitle.value.trim(), price = Number(oPrice.value), desc = oDesc.value.trim();
-    const f = document.getElementById("oImg").files[0];
-    let img = "";
-    if (f) img = await compressImg(f);
+document.getElementById("fCust").onsubmit = e => {
+  e.preventDefault();
+  setCust({ name: cName.value.trim(), phone: cPhone.value.trim(), addr: cAddr.value.trim() });
+  goTab("home");
+};
 
-    if (id) {
-      const idx = offers.findIndex(x => x.id == id);
-     
-      if (idx > -1) { offers[idx].title = title; offers[idx].price = price; offers[idx].desc = desc; if (img) offers[idx].img = img; }
-    } else {
-      offers.unshift({ id: Date.now(), title, price, desc, img, active: true });
-    }
-    await saveOffersCloud();
-    resetO();
-    btn.disabled = false;
-  };
-
-  window.editO = function(id) {
-    const o = offers.find(x => x.id === id); if (!o) return;
-    editId.value = o.id; oTitle.value = o.title; oPrice.value = o.price; oDesc.value = o.desc;
-    formHead.innerText = "✏️ تعديل العرض"; btnSaveO.innerText = "حفظ التعديلات"; btnCancelO.style.display = "inline-block";
-  };
-
-  window.resetO = function() {
-    fOffer.reset(); editId.value = ""; formHead.innerText = "➕ إضافة عرض جديد"; btnSaveO.innerText = "نشر العرض الآن"; btnCancelO.style.display = "none";
-  };
-  document.getElementById("btnCancelO").onclick = resetO;
-
-  window.togO = async function(id) {
-    const o = offers.find(x => x.id === id);
-    if (o) { o.active = o.active === false ? true : false; await saveOffersCloud(); }
-  };
-
-  window.delO = async function(id) {
-    if (confirm("حذف العرض نهائياً من الموقع؟")) {
-      offers = offers.filter(x => x.id !== id);
-      await saveOffersCloud();
-    }
-  };
-
-  window.doneOrd = async function(id) {
-    const r = orders.find(x => x.id === id);
-    if (r) {
-      const now = new Date();
-      r.status = "done";
-      r.delTime = now.toLocaleDateString("ar-EG") + " - " + now.toLocaleTimeString("ar-EG", { hour: "2-digit", minute: "2-digit" });
-      await saveOrdersCloud();
-    }
-  };
-
+async function syncCloud() {
+  try {
+    const r1 = await fetch(DB + "/offers.json?t=" + Date.now());
+    const d1 = await r1.json();
+    offers = d1 ? (Array.isArray(d1) ? d1.filter(Boolean) : Object.values(d1)) : [];
+  } catch (e) {
+    console.log("تعذر جلب العروض:", e);
+  }
   renderHome();
+  if (logged) {
+    try {
+      const r2 = await fetch(DB + "/orders.json?t=" + Date.now());
+      const d2 = await r2.json();
+      orders = d2 ? (Array.isArray(d2) ? d2.filter(Boolean) : Object.values(d2)) : [];
+    } catch (e) {}
+    renderAdmin();
+  }
+}
+
+async function saveOffersCloud() {
+  try {
+    const res = await fetch(DB + "/offers.json", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(offers)
+    });
+    if (!res.ok) alert("خطأ من السيرفر: " + res.status);
+  } catch (e) {
+    alert("تأكد من اتصال الإنترنت: " + e.message);
+  }
+}
+
+async function saveOrdersCloud() {
+  try {
+    await fetch(DB + "/orders.json", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(orders)
+    });
+  } catch (e) {
+    alert("خطأ أثناء إرسال الطلب: " + e.message);
+  }
+}
+
+function compressImg(file) {
+  return new Promise(res => {
+    const r = new FileReader();
+    r.onload = e => {
+      const img = new Image();
+      img.onload = () => {
+        const c = document.createElement("canvas");
+        const w = 400;
+        c.width = img.width > w ? w : img.width;
+        c.height = img.width > w ? img.height * (w / img.width) : img.height;
+        c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+        res(c.toDataURL("image/jpeg", 0.6));
+      };
+      img.src = e.target.result;
+    };
+    r.readAsDataURL(file);
+  });
+}
+
+function renderHome() {
+  const c = getCust(), b = document.getElementById("custBanner");
+  b.innerHTML = c ? `<div>مرحباً <strong>${c.name}</strong> | العنوان: <strong>${c.addr}</strong></div><button type="button" class="btn" style="padding:5px 14px" onclick="goTab('cust')">تعديل بياناتي</button>` :
+    `<div>⚠️ <strong>تنبيه:</strong> سجل اسمك ورقمك وعنوانك أولاً لطلب الأوردر.</div><button type="button" class="btn" style="padding:5px 14px" onclick="goTab('cust')">سجل بياناتك الآن</button>`;
+
+  const g = document.getElementById("offersGrid");
+  g.innerHTML = "";
+  const activeOffers = offers.filter(o => o && o.active !== false);
+  if (activeOffers.length === 0) {
+    g.innerHTML = `<p style="color:#b3b3b3">لا توجد عروض منشورة حالياً.</p>`;
+    return;
+  }
+  activeOffers.forEach(o => {
+    const imgTag = o.img ? `<img src="${o.img}" style="width:100%;height:200px;object-fit:cover;border-radius:8px;margin-bottom:10px;border:1px solid #333">` : '';
+    g.innerHTML += `<div class="offer"><div>${imgTag}<h3>${o.title}</h3><p style="color:#b3b3b3">${o.desc}</p><div class="price">${o.price} جنيه</div></div>
+    <div><div class="qty"><label>الكمية:</label><input type="number" id="q_${o.id}" value="1" min="1"></div>
+    <button type="button" class="btn" style="width:100%" onclick="orderNow(${o.id})">اطلب الأوردر الآن 🛒</button>
+    <div class="phone-box">📞 للطلب المباشر: ${SHOP_NUM}</div></div></div>`;
+  });
+}
+
+async function orderNow(id) {
+  const c = getCust();
+  if (!c) { goTab("cust"); return; }
+  const o = offers.find(x => x.id === id);
+  const qty = parseInt(document.getElementById("q_" + id).value) || 1;
+  const tot = o.price * qty;
+  const now = new Date();
+  const time = now.toLocaleDateString("ar-EG") + " - " + now.toLocaleTimeString("ar-EG", { hour: "2-digit", minute: "2-digit" });
+
+  await syncCloud();
+  orders.unshift({ id: Date.now(), time, name: c.name, phone: c.phone, addr: c.addr, title: o.title, qty, tot, status: "pending" });
+  await saveOrdersCloud();
+  document.getElementById("orderPopup").style.display = "flex";
+}
+
+document.getElementById("btnLogin").onclick = async () => {
+  if (document.getElementById("passIn").value === ADMIN_PASS) {
+    logged = true;
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("adminBox").style.display = "block";
+    await syncCloud();
+  } else { alert("كلمة المرور غير صحيحة!"); }
+};
+
+document.getElementById("btnLogout").onclick = () => {
+  logged = false;
+  document.getElementById("passIn").value = "";
+  document.getElementById("loginBox").style.display = "block";
+  document.getElementById("adminBox").style.display = "none";
+};
+
+document.getElementById("btnRefresh").onclick = async () => {
+  await syncCloud();
+  alert("تم تحديث البيانات بنجاح!");
+};
+
+function renderAdmin() {
+  if (!logged) return;
+  const tbO = document.getElementById("tbOffers"); tbO.innerHTML = "";
+  offers.forEach(o => {
+    if (!o) return;
+    const thumb = o.img ? `<img src="${o.img}" style="width:45px;height:45px;object-fit:cover;border-radius:6px">` : '-';
+    tbO.innerHTML += `<tr><td>${thumb}</td><td><strong>${o.title}</strong></td><td>${o.desc}</td><td>${o.price} ج.م</td>
+    <td>${o.active !== false ? '<span style="color:#28a745">نشط</span>' : '<span style="color:#dc3545">متوقف</span>'}</td>
+    <td style="display:flex;gap:5px;flex-wrap:wrap">
+      <button type="button" class="btn" style="padding:4px 9px;font-size:.85rem" onclick="editO(${o.id})">تعديل</button>
+      <button type="button" class="btn btn-org" style="padding:4px 9px;font-size:.85rem" onclick="togO(${o.id})">${o.active !== false ? 'إيقاف' : 'تشغيل'}</button>
+      <button type="button" class="btn btn-red" style="padding:4px 9px;font-size:.85rem" onclick="delO(${o.id})">حذف</button>
+    </td></tr>`;
+  });
+
+  const tbP = document.getElementById("tbPend"), tbD = document.getElementById("tbDone");
+  tbP.innerHTML = ""; tbD.innerHTML = "";
+  orders.forEach(r => {
+    if (!r) return;
+    if (r.status === "pending") {
+      tbP.innerHTML += `<tr><td>${r.time}</td><td><strong>${r.name}</strong></td><td>${r.phone}</td><td>${r.addr}</td><td>${r.title}</td><td>${r.qty}</td><td><strong>${r.tot} ج.م</strong></td>
+      <td><button type="button" class="btn btn-grn" style="padding:5px 10px;font-size:.85rem" onclick="doneOrd(${r.id})">✅ تم التوصيل</button></td></tr>`;
+    } else {
+      tbD.innerHTML += `<tr><td>${r.time}</td><td>${r.delTime || "-"}</td><td>${r.name}</td><td>${r.phone}</td><td>${r.addr}</td><td>${r.title} (×${r.qty})</td><td><strong>${r.tot} ج.م</strong></td></tr>`;
+    }
+  });
+}
+
+document.getElementById("fOffer").onsubmit = async e => {
+  e.preventDefault();
+  const btn = document.getElementById("btnSaveO");
+  btn.disabled = true; btn.innerText = "جاري الحفظ...";
+
+  const id = document.getElementById("editId").value;
+  const title = oTitle.value.trim(), price = Number(oPrice.value), desc = oDesc.value.trim();
+  const f = document.getElementById("oImg").files[0];
+  let img = "";
+  if (f) img = await compressImg(f);
+
+  await syncCloud();
+  if (id) {
+    const idx = offers.findIndex(x => x.id == id);
+    if (idx > -1) { offers[idx].title = title; offers[idx].price = price; offers[idx].desc = desc; if (img) offers[idx].img = img; }
+  } else {
+    offers.unshift({ id: Date.now(), title, price, desc, img, active: true });
+  }
+  await saveOffersCloud();
+  resetO(); renderAdmin(); renderHome();
+  btn.disabled = false;
+};
+
+function editO(id) {
+  const o = offers.find(x => x.id === id); if (!o) return;
+  editId.value = o.id; oTitle.value = o.title; oPrice.value = o.price; oDesc.value = o.desc;
+  formHead.innerText = "✏️ تعديل العرض"; btnSaveO.innerText = "حفظ التعديلات"; btnCancelO.style.display = "inline-block";
+}
+function resetO() { fOffer.reset(); editId.value = ""; formHead.innerText = "➕ إضافة عرض جديد"; btnSaveO.innerText = "نشر العرض الآن"; btnCancelO.style.display = "none"; }
+document.getElementById("btnCancelO").onclick = resetO;
+
+async function togO(id) {
+  const o = offers.find(x => x.id === id);
+  if (o) { o.active = o.active === false ? true : false; await saveOffersCloud(); renderAdmin(); renderHome(); }
+}
+async function delO(id) {
+  if (confirm("حذف العرض نهائياً من الموقع؟")) {
+    offers = offers.filter(x => x.id !== id);
+    await saveOffersCloud();
+    renderAdmin(); renderHome();
+  }
+}
+async function doneOrd(id) {
+  const r = orders.find(x => x.id === id);
+  if (r) {
+    const now = new Date();
+    r.status = "done";
+    r.delTime = now.toLocaleDateString("ar-EG") + " - " + now.toLocaleTimeString("ar-EG", { hour: "2-digit", minute: "2-digit" });
+    await saveOrdersCloud();
+    renderAdmin();
+  }
+}
+
+renderHome();
+syncCloud();
 </script>
 </body>
 </html>
+
