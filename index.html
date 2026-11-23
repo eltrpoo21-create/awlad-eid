@@ -59,7 +59,7 @@ footer p{color:#b3b3b3;margin-bottom:5px}footer .dev{color:#FFD700;font-weight:b
   <div id="s-home" class="sec active">
     <div id="custBanner" class="banner"></div>
     <h2 class="title">أحدث عروض مطاحن بن أولاد عيد</h2>
-    <div id="offersGrid" class="grid"></div>
+    <div id="offersGrid" class="grid"><p style="color:#FFD700">جاري تحميل العروض...</p></div>
 
     <div style="margin-top:35px">
       <h2 class="title">📍 العناوين</h2>
@@ -104,7 +104,7 @@ footer p{color:#b3b3b3;margin-bottom:5px}footer .dev{color:#FFD700;font-weight:b
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px">
         <h2 class="title" style="margin:0">لوحة تحكم مطاحن بن أولاد عيد</h2>
         <div>
-          <button type="button" id="btnRefresh" class="btn btn-grn">🔄 تحديث الطلبات</button>
+          <button type="button" id="btnRefresh" class="btn btn-grn">🔄 تحديث البيانات</button>
           <button type="button" id="btnLogout" class="btn btn-red">خروج</button>
         </div>
       </div>
@@ -146,10 +146,6 @@ footer p{color:#b3b3b3;margin-bottom:5px}footer .dev{color:#FFD700;font-weight:b
   <p><strong>مطاحن بن أولاد عيد</strong> - خبرة منذ عام ١٩٨٥ | أصل القهوة العربية في مصر</p>
   <p>للطلبات والاستفسارات: <strong style="color:#FFD700">01061216062</strong></p>
   <p class="dev">تنفيذ المهندس محمد رضوان</p>
-<footer>
-  <p><strong>مطاحن بن أولاد عيد</strong> - خبرة منذ عام ١٩٨٥ | أصل القهوة العربية في مصر</p>
-  <p>للطلبات والاستفسارات: <strong style="color:#FFD700">01061216062</strong></p>
-  <p class="dev">تنفيذ المهندس محمد رضوان</p>
 </footer>
 
 <div id="orderPopup" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:9999;justify-content:center;align-items:center;padding:20px">
@@ -162,19 +158,51 @@ footer p{color:#b3b3b3;margin-bottom:5px}footer .dev{color:#FFD700;font-weight:b
 </div>
 
 <script>
+const DB_URL = "https://firebaseio.com";
 const SHOP_NUM = "01061216062";
 const ADMIN_PASS = "Muhammad2005";
 
-let offers = JSON.parse(localStorage.getItem("eid_offers")) || [
-  { id: 1, title: "عرض ١ كيلو بن محوج مخصوص", desc: "خلطة أولاد عيد السرية بالهيل والقرنفل", price: 450, img: "", active: true }
-];
-let orders = JSON.parse(localStorage.getItem("eid_orders")) || [];
+let offers = [];
+let orders = [];
 
-function saveAll(){
-  try{
-    localStorage.setItem("eid_offers", JSON.stringify(offers));
-    localStorage.setItem("eid_orders", JSON.stringify(orders));
-  }catch(e){ alert("مساحة التخزين ممتلئة، استخدم صورة أصغر حجماً."); }
+async function loadFromCloud(){
+  try {
+    const [resO, resOrd] = await Promise.all([
+      fetch(`${DB_URL}/offers.json`),
+      fetch(`${DB_URL}/orders.json`)
+    ]);
+    const dataO = await resO.json();
+    const dataOrd = await resOrd.json();
+    
+    offers = dataO ? (Array.isArray(dataO) ? dataO.filter(Boolean) : Object.values(dataO)) : [];
+    orders = dataOrd ? (Array.isArray(dataOrd) ? dataOrd.filter(Boolean) : Object.values(dataOrd)) : [];
+  } catch (e) {
+    console.error("خطأ في الاتصال بقاعدة البيانات:", e);
+  }
+}
+
+async function saveOffersCloud(){
+  try {
+    await fetch(`${DB_URL}/offers.json`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(offers)
+    });
+  } catch (e) {
+    alert("حدث خطأ أثناء حفظ العروض على السيرفر.");
+  }
+}
+
+async function saveOrdersCloud(){
+  try {
+    await fetch(`${DB_URL}/orders.json`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(orders)
+    });
+  } catch (e) {
+    alert("حدث خطأ أثناء إرسال الطلب.");
+  }
 }
 
 function compressImg(file){
@@ -184,11 +212,11 @@ function compressImg(file){
       const img=new Image();
       img.onload=()=>{
         const c=document.createElement("canvas");
-        const w=500;
+        const w=450;
         c.width=img.width>w?w:img.width;
         c.height=img.width>w?img.height*(w/img.width):img.height;
         c.getContext("2d").drawImage(img,0,0,c.width,c.height);
-        res(c.toDataURL("image/jpeg",0.7));
+        res(c.toDataURL("image/jpeg",0.65));
       };
       img.src=e.target.result;
     };
@@ -199,14 +227,14 @@ function compressImg(file){
 const getCust = () => { try{ return JSON.parse(localStorage.getItem("eid_cust")); }catch(e){ return null; } };
 const setCust = (c) => { try{ localStorage.setItem("eid_cust", JSON.stringify(c)); }catch(e){} };
 
-function goTab(t){
+async function goTab(t){
   ["home","cust","admin"].forEach(x=>{
     document.getElementById("s-"+x).classList.toggle("active",x===t);
     document.getElementById("b-"+x).classList.toggle("active",x===t);
   });
-  if(t==="home") renderHome();
+  if(t==="home"){ await loadFromCloud(); renderHome(); }
   if(t==="cust"){ const c=getCust(); if(c){ cName.value=c.name; cPhone.value=c.phone; cAddr.value=c.addr; } }
-  if(t==="admin") renderAdmin();
+  if(t==="admin"){ await loadFromCloud(); renderAdmin(); }
 }
 document.getElementById("b-home").onclick=()=>goTab("home");
 document.getElementById("b-cust").onclick=()=>goTab("cust");
@@ -224,10 +252,9 @@ function renderHome(){
   `<div>⚠️ <strong>تنبيه:</strong> سجل اسمك ورقمك وعنوانك أولاً لطلب الأوردر.</div><button type="button" class="btn" style="padding:5px 14px" onclick="goTab('cust')">سجل بياناتك الآن</button>`;
   
   const g=document.getElementById("offersGrid");
-  g.innerHTML="";
-  const activeOffers = offers.filter(o=>o.active !== false);
+  g.innerHTML=""; const activeOffers = offers.filter(o=>o && o.active !== false);
   if(activeOffers.length === 0){
-    g.innerHTML = `<p style="color:#b3b3b3">لا توجد عروض منشورة حالياً. (يمكن للمدير إضافتها من لوحة الإدارة).</p>`;
+    g.innerHTML = `<p style="color:#b3b3b3">لا توجد عروض منشورة حالياً.</p>`;
     return;
   }
   activeOffers.forEach(o=>{
@@ -239,7 +266,7 @@ function renderHome(){
   });
 }
 
-function orderNow(id){
+async function orderNow(id){
   const c=getCust();
   if(!c){ goTab("cust"); return; }
   const o=offers.find(x=>x.id===id);
@@ -248,26 +275,39 @@ function orderNow(id){
   const now=new Date();
   const time=now.toLocaleDateString("ar-EG")+" - "+now.toLocaleTimeString("ar-EG",{hour:"2-digit",minute:"2-digit"});
   
+  await loadFromCloud();
   orders.unshift({id:Date.now(), time, name:c.name, phone:c.phone, addr:c.addr, title:o.title, qty, tot, status:"pending"});
-  saveAll();
+  await saveOrdersCloud();
   document.getElementById("orderPopup").style.display="flex";
 }
 
 let logged=false;
-document.getElementById("btnLogin").onclick=()=>{
-  if(document.getElementById("passIn").value.trim()===ADMIN_PASS){ logged=true; document.getElementById("passIn").value=""; renderAdmin(); }
-  else{ document.getElementById("passIn").style.borderColor="red"; }
+document.getElementById("btnLogin").onclick=async ()=>{
+  if(document.getElementById("passIn").value===ADMIN_PASS){
+    logged=true;
+    document.getElementById("loginBox").style.display="none";
+    document.getElementById("adminBox").style.display="block";
+    await loadFromCloud();
+    renderAdmin();
+  }else{ alert("كلمة المرور غير صحيحة!"); }
 };
-document.getElementById("btnLogout").onclick=()=>{ logged=false; renderAdmin(); };
-document.getElementById("btnRefresh").onclick=()=>renderAdmin();
+document.getElementById("btnLogout").onclick=()=>{
+  logged=false;
+  document.getElementById("passIn").value="";
+  document.getElementById("loginBox").style.display="block";
+  document.getElementById("adminBox").style.display="none";
+};
+document.getElementById("btnRefresh").onclick=async ()=>{
+  await loadFromCloud();
+  renderAdmin();
+  alert("تم تحديث البيانات والطلبات بنجاح!");
+};
 
 function renderAdmin(){
-  document.getElementById("loginBox").style.display=logged?"none":"block";
-  document.getElementById("adminBox").style.display=logged?"block":"none";
   if(!logged) return;
-
   const tbO=document.getElementById("tbOffers"); tbO.innerHTML="";
   offers.forEach(o=>{
+    if(!o) return;
     const thumb = o.img ? `<img src="${o.img}" style="width:45px;height:45px;object-fit:cover;border-radius:6px">` : '-';
     tbO.innerHTML+=`<tr><td>${thumb}</td><td><strong>${o.title}</strong></td><td>${o.desc}</td><td>${o.price} ج.م</td>
     <td>${o.active!==false?'<span style="color:#28a745">نشط</span>':'<span style="color:#dc3545">متوقف</span>'}</td>
@@ -281,6 +321,7 @@ function renderAdmin(){
   const tbP=document.getElementById("tbPend"), tbD=document.getElementById("tbDone");
   tbP.innerHTML=""; tbD.innerHTML="";
   orders.forEach(r=>{
+    if(!r) return;
     if(r.status==="pending"){
       tbP.innerHTML+=`<tr><td>${r.time}</td><td><strong>${r.name}</strong></td><td>${r.phone}</td><td>${r.addr}</td><td>${r.title}</td><td>${r.qty}</td><td><strong>${r.tot} ج.م</strong></td>
       <td><button type="button" class="btn btn-grn" style="padding:5px 10px;font-size:.85rem" onclick="doneOrd(${r.id})">✅ تم التوصيل</button></td></tr>`;
@@ -292,19 +333,25 @@ function renderAdmin(){
 
 document.getElementById("fOffer").onsubmit=async e=>{
   e.preventDefault();
+  const btn=document.getElementById("btnSaveO");
+  btn.disabled=true; btn.innerText="جاري الحفظ...";
+  
   const id=document.getElementById("editId").value;
   const title=oTitle.value.trim(), price=Number(oPrice.value), desc=oDesc.value.trim();
   const f=document.getElementById("oImg").files[0];
   let img="";
   if(f) img=await compressImg(f);
 
+  await loadFromCloud();
   if(id){
     const idx=offers.findIndex(x=>x.id==id);
     if(idx>-1){ offers[idx].title=title; offers[idx].price=price; offers[idx].desc=desc; if(img) offers[idx].img=img; }
   }else{
     offers.unshift({id:Date.now(), title, price, desc, img, active:true});
   }
-  saveAll(); resetO(); renderAdmin();
+  await saveOffersCloud();
+  resetO(); renderAdmin();
+  btn.disabled=false;
 };
 
 function editO(id){
@@ -315,21 +362,29 @@ function editO(id){
 function resetO(){ fOffer.reset(); editId.value=""; formHead.innerText="➕ إضافة عرض جديد"; btnSaveO.innerText="نشر العرض الآن"; btnCancelO.style.display="none"; }
 document.getElementById("btnCancelO").onclick=resetO;
 
-function togO(id){ const o=offers.find(x=>x.id===id); if(o){ o.active = o.active===false ? true : false; saveAll(); renderAdmin(); } }
-function delO(id){ if(confirm("حذف العرض؟")){ offers=offers.filter(x=>x.id!==id); saveAll(); renderAdmin(); } }
-function doneOrd(id){
+async function togO(id){
+  const o=offers.find(x=>x.id===id);
+  if(o){ o.active = o.active===false ? true : false; await saveOffersCloud(); renderAdmin(); }
+}
+async function delO(id){
+  if(confirm("حذف العرض نهائياً من الموقع؟")){
+    offers=offers.filter(x=>x.id!==id);
+    await saveOffersCloud();
+    renderAdmin();
+  }
+}
+async function doneOrd(id){
   const r=orders.find(x=>x.id===id);
   if(r){
     const now=new Date();
     r.status="done";
     r.delTime=now.toLocaleDateString("ar-EG")+" - "+now.toLocaleTimeString("ar-EG",{hour:"2-digit",minute:"2-digit"});
-    saveAll(); renderAdmin();
+    await saveOrdersCloud();
+    renderAdmin();
   }
 }
 
-renderHome();
+(async()=>{ await loadFromCloud(); renderHome(); })();
 </script>
 </body>
 </html>
-
-
