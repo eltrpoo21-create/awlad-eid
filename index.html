@@ -338,7 +338,7 @@ document.getElementById("fOffer").onsubmit=async e=>{
   
   const id=document.getElementById("editId").value;
   const title=oTitle.value.trim(), price=Number(oPrice.value), desc=oDesc.value.trim();
-  const f=document.getElementById("oImg").files[0];
+const f=document.getElementById("oImg").files[0];
   let img="";
   if(f) img=await compressImg(f);
 
