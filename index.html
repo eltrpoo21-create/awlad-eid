@@ -7,32 +7,32 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Tahoma,Arial,sans-serif}
 body{background:linear-gradient(rgba(10,10,10,0.85),rgba(10,10,10,0.92)),url('bg.jpg.jpeg') no-repeat center center fixed;background-size:cover;color:#fff;line-height:1.6}
-  header{background:linear-gradient(180deg,#1a1a1a,#0a0a0a);border-bottom:3px solid #FFD700;padding:22px 15px;text-align:center}
+header{background:linear-gradient(180deg,rgba(26,26,26,0.92),rgba(10,10,10,0.85));border-bottom:3px solid #FFD700;padding:22px 15px;text-align:center}
 .badge{background:#FFD700;color:#0a0a0a;padding:4px 16px;border-radius:20px;font-weight:bold;font-size:.9rem;display:inline-block;margin-bottom:8px}
-header h1{color:#FFD700;font-size:2.2rem;font-weight:900}
-header .slogan{color:#fff;font-size:1.15rem;margin-top:4px;font-weight:bold}
-header .desc{color:#b3b3b3;font-size:.95rem;max-width:600px;margin:8px auto 0}
+header h1{color:#FFD700;font-size:1.95rem;font-weight:900;margin:0}
+header .slogan{color:#fff;font-size:1.15rem;margin-top:6px;font-weight:bold}
+header .desc{color:#d0d0d0;font-size:.95rem;max-width:600px;margin:8px auto 0}
 nav{display:flex;justify-content:center;background:#141414;border-bottom:2px solid #2c2c2c;position:sticky;top:0;z-index:999}
 .nav-btn{background:transparent;border:none;color:#fff;padding:15px 22px;font-size:1.05rem;font-weight:bold;cursor:pointer;border-bottom:4px solid transparent}
 .nav-btn:hover,.nav-btn.active{color:#FFD700;border-bottom:4px solid #FFD700;background:rgba(255,215,0,.08)}
 .container{max-width:1150px;margin:25px auto;padding:0 15px;min-height:60vh}
 .sec{display:none}.sec.active{display:block}
 .title{color:#FFD700;font-size:1.6rem;margin-bottom:18px;border-right:5px solid #FFD700;padding-right:12px}
-.card{background:#161616;border:1px solid #333;border-radius:12px;padding:20px;margin-bottom:20px}
+.card{background:rgba(22,22,22,0.94);border:1px solid #333;border-radius:12px;padding:20px;margin-bottom:20px}
 .fg{margin-bottom:14px}.fg label{display:block;margin-bottom:5px;color:#FFD700;font-weight:bold}
 .fg input,.fg textarea{width:100%;padding:11px;background:#222;border:1px solid #444;border-radius:8px;color:#fff;font-size:1rem}
 .fg input:focus,.fg textarea:focus{outline:none;border-color:#FFD700}
 .btn{background:#FFD700;color:#0a0a0a;border:none;padding:11px 20px;font-size:1rem;font-weight:bold;border-radius:8px;cursor:pointer}
 .btn:hover{background:#e6c200}.btn-red{background:#dc3545;color:#fff}.btn-org{background:#ff9800;color:#000}.btn-grn{background:#28a745;color:#fff}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
-.offer{background:#161616;border:2px solid #2c2c2c;border-radius:12px;padding:18px;display:flex;flex-direction:column;justify-content:space-between}
+.offer{background:rgba(22,22,22,0.95);border:2px solid #2c2c2c;border-radius:12px;padding:18px;display:flex;flex-direction:column;justify-content:space-between}
 .offer:hover{border-color:#FFD700}.offer h3{color:#FFD700;font-size:1.3rem;margin-bottom:8px}
 .price{font-size:1.45rem;font-weight:900;margin:10px 0}
 .phone-box{background:#222;color:#FFD700;text-align:center;padding:7px;border-radius:6px;margin-top:10px;font-weight:bold;border:1px dashed #FFD700}
 .qty{display:flex;align-items:center;gap:10px;margin:10px 0}.qty input{width:75px;padding:7px;background:#222;border:1px solid #FFD700;color:#fff;border-radius:6px;text-align:center;font-weight:bold}
 .twrap{overflow-x:auto}table{width:100%;border-collapse:collapse;margin-top:10px;background:#1a1a1a}
 th,td{padding:11px;text-align:right;border-bottom:1px solid #333}th{background:#FFD700;color:#0a0a0a;font-weight:bold}
-.banner{background:rgba(255,215,0,.12);border:1px solid #FFD700;padding:14px;border-radius:8px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.banner{background:rgba(255,215,0,.15);border:1px solid #FFD700;padding:14px;border-radius:8px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
 footer{background:#050505;border-top:2px solid #FFD700;text-align:center;padding:22px 15px;margin-top:45px}
 footer p{color:#b3b3b3;margin-bottom:5px}footer .dev{color:#FFD700;font-weight:bold;font-size:1.15rem;margin-top:8px}
 </style>
@@ -43,11 +43,12 @@ footer p{color:#b3b3b3;margin-bottom:5px}footer .dev{color:#FFD700;font-weight:b
   <div class="badge">خبرة منذ عام ١٩٨٥</div>
   <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin:8px 0">
     <img src="logo.png.jpeg" alt="لوجو مطاحن بن أولاد عيد" style="width:55px;height:55px;object-fit:contain;border-radius:50%;border:2px solid #FFD700;background:#111;flex-shrink:0" onerror="this.style.display='none'">
-    <h1 style="margin:0;font-size:1.85rem">مطاحن بن أولاد عيد</h1>
+    <h1>مطاحن بن أولاد عيد</h1>
   </div>
   <p class="slogan">☕ القهوة العربية - أصل القهوة العربية في مصر ☕</p>
   <p class="desc">ننتقي أجود حبوب البن العالمية ونحمصها بعناية فائقة لنقدم لك فنجان قهوة يليق بمزاجك الأصيل منذ أكثر من ٤٠ عاماً.</p>
 </header>
+
 <nav>
   <button type="button" id="b-home" class="nav-btn active">🏠 الرئيسية والعروض</button>
   <button type="button" id="b-cust" class="nav-btn">👤 دخول العملاء</button>
@@ -58,9 +59,9 @@ footer p{color:#b3b3b3;margin-bottom:5px}footer .dev{color:#FFD700;font-weight:b
   <div id="s-home" class="sec active">
     <div id="custBanner" class="banner"></div>
     <h2 class="title">أحدث عروض مطاحن بن أولاد عيد</h2>
-    <div id="offersGrid" class="grid"><p style="color:#FFD700">جاري تحميل العروض...</p></div>
-  </div>
-<div style="margin-top:35px">
+    <div id="offersGrid" class="grid"></div>
+
+    <div style="margin-top:35px">
       <h2 class="title">📍 العناوين</h2>
       <div class="grid">
         <div class="card" style="border-color:#FFD700">
@@ -77,6 +78,8 @@ footer p{color:#b3b3b3;margin-bottom:5px}footer .dev{color:#FFD700;font-weight:b
         </div>
       </div>
     </div>
+  </div>
+
   <div id="s-cust" class="sec">
     <h2 class="title">تسجيل بيانات العميل للطلب</h2>
     <div class="card" style="max-width:500px;margin:0 auto">
@@ -113,6 +116,7 @@ footer p{color:#b3b3b3;margin-bottom:5px}footer .dev{color:#FFD700;font-weight:b
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px">
             <div class="fg"><label>اسم العرض / الصنف *</label><input type="text" id="oTitle" required placeholder="مثال: عرض ١ كيلو بن محوج"></div>
             <div class="fg"><label>السعر (جنيه) *</label><input type="number" id="oPrice" required placeholder="450"></div>
+            <div class="fg"><label>صورة المنتج / العرض</label><input type="file" id="oImg" accept="image/*"></div>
           </div>
           <div class="fg"><label>تفاصيل العرض *</label><textarea id="oDesc" rows="2" required placeholder="تفاصيل العرض والوزن"></textarea></div>
           <button type="submit" id="btnSaveO" class="btn">نشر العرض الآن</button>
@@ -122,7 +126,7 @@ footer p{color:#b3b3b3;margin-bottom:5px}footer .dev{color:#FFD700;font-weight:b
 
       <div class="card">
         <h3 style="color:#FFD700;margin-bottom:12px">📦 العروض الحالية (تعديل / إيقاف / حذف)</h3>
-        <div class="twrap"><table><thead><tr><th>العرض</th><th>التفاصيل</th><th>السعر</th><th>الحالة</th><th>التحكم</th></tr></thead><tbody id="tbOffers"></tbody></table></div>
+        <div class="twrap"><table><thead><tr><th>الصورة</th><th>العرض</th><th>التفاصيل</th><th>السعر</th><th>الحالة</th><th>التحكم</th></tr></thead><tbody id="tbOffers"></tbody></table></div>
       </div>
 
       <div class="card">
@@ -131,13 +135,17 @@ footer p{color:#b3b3b3;margin-bottom:5px}footer .dev{color:#FFD700;font-weight:b
       </div>
 
       <div class="card">
-        <h3 style="color:#28a745;margin-bottom:12px">✅ سجل التوصيلات المحفوظ في السحابة</h3>
+        <h3 style="color:#28a745;margin-bottom:12px">✅ سجل التوصيلات المحفوظ</h3>
         <div class="twrap"><table><thead><tr><th>وقت الطلب</th><th>وقت التوصيل</th><th>العميل</th><th>التليفون</th><th>العنوان</th><th>الطلب</th><th>الإجمالي</th></tr></thead><tbody id="tbDone"></tbody></table></div>
       </div>
     </div>
   </div>
 </div>
 
+<footer>
+  <p><strong>مطاحن بن أولاد عيد</strong> - خبرة منذ عام ١٩٨٥ | أصل القهوة العربية في مصر</p>
+  <p>للطلبات والاستفسارات: <strong style="color:#FFD700">01061216062</strong></p>
+  <p class="dev">تنفيذ المهندس محمد رضوان</p>
 <footer>
   <p><strong>مطاحن بن أولاد عيد</strong> - خبرة منذ عام ١٩٨٥ | أصل القهوة العربية في مصر</p>
   <p>للطلبات والاستفسارات: <strong style="color:#FFD700">01061216062</strong></p>
@@ -154,37 +162,38 @@ footer p{color:#b3b3b3;margin-bottom:5px}footer .dev{color:#FFD700;font-weight:b
 </div>
 
 <script>
-const DB_URL = "https://firebaseio.com";
 const SHOP_NUM = "01061216062";
 const ADMIN_PASS = "Muhammad2005";
 
-async function cloudGet(path){
+let offers = JSON.parse(localStorage.getItem("eid_offers")) || [
+  { id: 1, title: "عرض ١ كيلو بن محوج مخصوص", desc: "خلطة أولاد عيد السرية بالهيل والقرنفل", price: 450, img: "", active: true }
+];
+let orders = JSON.parse(localStorage.getItem("eid_orders")) || [];
+
+function saveAll(){
   try{
-    const res = await fetch(`${DB_URL}/${path}.json`);
-    const data = await res.json();
-    if(!data) return [];
-    return Object.keys(data).map(k => ({fbKey: k, ...data[k]})).reverse();
-  }catch(e){ return []; }
+    localStorage.setItem("eid_offers", JSON.stringify(offers));
+    localStorage.setItem("eid_orders", JSON.stringify(orders));
+  }catch(e){ alert("مساحة التخزين ممتلئة، استخدم صورة أصغر حجماً."); }
 }
 
-async function cloudPost(path, obj){
-  await fetch(`${DB_URL}/${path}.json`, {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify(obj)
+function compressImg(file){
+  return new Promise(res=>{
+    const r=new FileReader();
+    r.onload=e=>{
+      const img=new Image();
+      img.onload=()=>{
+        const c=document.createElement("canvas");
+        const w=500;
+        c.width=img.width>w?w:img.width;
+        c.height=img.width>w?img.height*(w/img.width):img.height;
+        c.getContext("2d").drawImage(img,0,0,c.width,c.height);
+        res(c.toDataURL("image/jpeg",0.7));
+      };
+      img.src=e.target.result;
+    };
+    r.readAsDataURL(file);
   });
-}
-
-async function cloudPatch(path, fbKey, obj){
-  await fetch(`${DB_URL}/${path}/${fbKey}.json`, {
-    method: "PATCH",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify(obj)
-  });
-}
-
-async function cloudDelete(path, fbKey){
-    await fetch(`${DB_URL}/${path}/${fbKey}.json`, { method: "DELETE" });
 }
 
 const getCust = () => { try{ return JSON.parse(localStorage.getItem("eid_cust")); }catch(e){ return null; } };
@@ -209,36 +218,38 @@ document.getElementById("fCust").onsubmit=e=>{
   goTab("home");
 };
 
-async function renderHome(){
+function renderHome(){
   const c=getCust(), b=document.getElementById("custBanner");
   b.innerHTML=c?`<div>مرحباً <strong>${c.name}</strong> | العنوان: <strong>${c.addr}</strong></div><button type="button" class="btn" style="padding:5px 14px" onclick="goTab('cust')">تعديل بياناتي</button>`:
   `<div>⚠️ <strong>تنبيه:</strong> سجل اسمك ورقمك وعنوانك أولاً لطلب الأوردر.</div><button type="button" class="btn" style="padding:5px 14px" onclick="goTab('cust')">سجل بياناتك الآن</button>`;
   
   const g=document.getElementById("offersGrid");
-  const offers = await cloudGet("offers");
   g.innerHTML="";
-  if(offers.length === 0){
+  const activeOffers = offers.filter(o=>o.active !== false);
+  if(activeOffers.length === 0){
     g.innerHTML = `<p style="color:#b3b3b3">لا توجد عروض منشورة حالياً. (يمكن للمدير إضافتها من لوحة الإدارة).</p>`;
     return;
   }
-  offers.forEach(o=>{
-    if(o.active === false) return;
-    g.innerHTML+=`<div class="offer"><div><h3>${o.title}</h3><p style="color:#b3b3b3">${o.desc}</p><div class="price">${o.price} جنيه</div></div>
-    <div><div class="qty"><label>الكمية:</label><input type="number" id="q_${o.fbKey}" value="1" min="1"></div>
-    <button type="button" class="btn" style="width:100%" onclick="orderNow('${o.fbKey}','${o.title.replace(/'/g,"")}',${o.price})">اطلب الأوردر الآن 🛒</button>
+  activeOffers.forEach(o=>{
+    const imgTag = o.img ? `<img src="${o.img}" style="width:100%;height:200px;object-fit:cover;border-radius:8px;margin-bottom:10px;border:1px solid #333">` : '';
+    g.innerHTML+=`<div class="offer"><div>${imgTag}<h3>${o.title}</h3><p style="color:#b3b3b3">${o.desc}</p><div class="price">${o.price} جنيه</div></div>
+    <div><div class="qty"><label>الكمية:</label><input type="number" id="q_${o.id}" value="1" min="1"></div>
+    <button type="button" class="btn" style="width:100%" onclick="orderNow(${o.id})">اطلب الأوردر الآن 🛒</button>
     <div class="phone-box">📞 للطلب المباشر: ${SHOP_NUM}</div></div></div>`;
   });
 }
 
-async function orderNow(fbKey, title, price){
+function orderNow(id){
   const c=getCust();
   if(!c){ goTab("cust"); return; }
-  const qty=parseInt(document.getElementById("q_"+fbKey).value)||1;
-  const tot=price*qty;
+  const o=offers.find(x=>x.id===id);
+  const qty=parseInt(document.getElementById("q_"+id).value)||1;
+  const tot=o.price*qty;
   const now=new Date();
   const time=now.toLocaleDateString("ar-EG")+" - "+now.toLocaleTimeString("ar-EG",{hour:"2-digit",minute:"2-digit"});
   
-  await cloudPost("orders", {time, name:c.name, phone:c.phone, addr:c.addr, title, qty, tot, status:"pending"});
+  orders.unshift({id:Date.now(), time, name:c.name, phone:c.phone, addr:c.addr, title:o.title, qty, tot, status:"pending"});
+  saveAll();
   document.getElementById("orderPopup").style.display="flex";
 }
 
@@ -250,30 +261,29 @@ document.getElementById("btnLogin").onclick=()=>{
 document.getElementById("btnLogout").onclick=()=>{ logged=false; renderAdmin(); };
 document.getElementById("btnRefresh").onclick=()=>renderAdmin();
 
-async function renderAdmin(){
+function renderAdmin(){
   document.getElementById("loginBox").style.display=logged?"none":"block";
   document.getElementById("adminBox").style.display=logged?"block":"none";
   if(!logged) return;
 
-  const offers = await cloudGet("offers");
   const tbO=document.getElementById("tbOffers"); tbO.innerHTML="";
   offers.forEach(o=>{
-    tbO.innerHTML+=`<tr><td><strong>${o.title}</strong></td><td>${o.desc}</td><td>${o.price} ج.م</td>
+    const thumb = o.img ? `<img src="${o.img}" style="width:45px;height:45px;object-fit:cover;border-radius:6px">` : '-';
+    tbO.innerHTML+=`<tr><td>${thumb}</td><td><strong>${o.title}</strong></td><td>${o.desc}</td><td>${o.price} ج.م</td>
     <td>${o.active!==false?'<span style="color:#28a745">نشط</span>':'<span style="color:#dc3545">متوقف</span>'}</td>
     <td style="display:flex;gap:5px;flex-wrap:wrap">
-      <button type="button" class="btn" style="padding:4px 9px;font-size:.85rem" onclick="editO('${o.fbKey}','${o.title.replace(/'/g,"")}',${o.price},'${o.desc.replace(/'/g,"")}')">تعديل</button>
-      <button type="button" class="btn btn-org" style="padding:4px 9px;font-size:.85rem" onclick="togO('${o.fbKey}',${o.active!==false})">${o.active!==false?'إيقاف':'تشغيل'}</button>
-      <button type="button" class="btn btn-red" style="padding:4px 9px;font-size:.85rem" onclick="delO('${o.fbKey}')">حذف</button>
+      <button type="button" class="btn" style="padding:4px 9px;font-size:.85rem" onclick="editO(${o.id})">تعديل</button>
+      <button type="button" class="btn btn-org" style="padding:4px 9px;font-size:.85rem" onclick="togO(${o.id})">${o.active!==false?'إيقاف':'تشغيل'}</button>
+      <button type="button" class="btn btn-red" style="padding:4px 9px;font-size:.85rem" onclick="delO(${o.id})">حذف</button>
     </td></tr>`;
   });
 
-  const orders = await cloudGet("orders");
   const tbP=document.getElementById("tbPend"), tbD=document.getElementById("tbDone");
   tbP.innerHTML=""; tbD.innerHTML="";
   orders.forEach(r=>{
     if(r.status==="pending"){
       tbP.innerHTML+=`<tr><td>${r.time}</td><td><strong>${r.name}</strong></td><td>${r.phone}</td><td>${r.addr}</td><td>${r.title}</td><td>${r.qty}</td><td><strong>${r.tot} ج.م</strong></td>
-      <td><button type="button" class="btn btn-grn" style="padding:5px 10px;font-size:.85rem" onclick="doneOrd('${r.fbKey}')">✅ تم التوصيل</button></td></tr>`;
+      <td><button type="button" class="btn btn-grn" style="padding:5px 10px;font-size:.85rem" onclick="doneOrd(${r.id})">✅ تم التوصيل</button></td></tr>`;
     }else{
       tbD.innerHTML+=`<tr><td>${r.time}</td><td>${r.delTime||"-"}</td><td>${r.name}</td><td>${r.phone}</td><td>${r.addr}</td><td>${r.title} (×${r.qty})</td><td><strong>${r.tot} ج.م</strong></td></tr>`;
     }
@@ -282,33 +292,44 @@ async function renderAdmin(){
 
 document.getElementById("fOffer").onsubmit=async e=>{
   e.preventDefault();
-  const key=document.getElementById("editId").value;
+  const id=document.getElementById("editId").value;
   const title=oTitle.value.trim(), price=Number(oPrice.value), desc=oDesc.value.trim();
-  if(key){
-    await cloudPatch("offers", key, {title, price, desc});
+  const f=document.getElementById("oImg").files[0];
+  let img="";
+  if(f) img=await compressImg(f);
+
+  if(id){
+    const idx=offers.findIndex(x=>x.id==id);
+    if(idx>-1){ offers[idx].title=title; offers[idx].price=price; offers[idx].desc=desc; if(img) offers[idx].img=img; }
   }else{
-    await cloudPost("offers", {title, price, desc, active:true});
+    offers.unshift({id:Date.now(), title, price, desc, img, active:true});
   }
-  resetO(); renderAdmin();
+  saveAll(); resetO(); renderAdmin();
 };
 
-function editO(key, title, price, desc){
-  editId.value=key; oTitle.value=title; oPrice.value=price; oDesc.value=desc;
+function editO(id){
+  const o=offers.find(x=>x.id===id); if(!o) return;
+  editId.value=o.id; oTitle.value=o.title; oPrice.value=o.price; oDesc.value=o.desc;
   formHead.innerText="✏️ تعديل العرض"; btnSaveO.innerText="حفظ التعديلات"; btnCancelO.style.display="inline-block";
 }
 function resetO(){ fOffer.reset(); editId.value=""; formHead.innerText="➕ إضافة عرض جديد"; btnSaveO.innerText="نشر العرض الآن"; btnCancelO.style.display="none"; }
 document.getElementById("btnCancelO").onclick=resetO;
 
-async function togO(key, current){ await cloudPatch("offers", key, {active: !current}); renderAdmin(); }
-async function delO(key){ await cloudDelete("offers", key); renderAdmin(); }
-async function doneOrd(key){
-  const now=new Date(), delTime=now.toLocaleDateString("ar-EG")+" - "+now.toLocaleTimeString("ar-EG",{hour:"2-digit",minute:"2-digit"});
-  await cloudPatch("orders", key, {status:"done", delTime});
-  renderAdmin();
+function togO(id){ const o=offers.find(x=>x.id===id); if(o){ o.active = o.active===false ? true : false; saveAll(); renderAdmin(); } }
+function delO(id){ if(confirm("حذف العرض؟")){ offers=offers.filter(x=>x.id!==id); saveAll(); renderAdmin(); } }
+function doneOrd(id){
+  const r=orders.find(x=>x.id===id);
+  if(r){
+    const now=new Date();
+    r.status="done";
+    r.delTime=now.toLocaleDateString("ar-EG")+" - "+now.toLocaleTimeString("ar-EG",{hour:"2-digit",minute:"2-digit"});
+    saveAll(); renderAdmin();
+  }
 }
 
-setInterval(()=>{ if(logged) renderAdmin(); }, 15000);
 renderHome();
 </script>
 </body>
 </html>
+
+
