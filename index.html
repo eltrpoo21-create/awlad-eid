@@ -183,14 +183,19 @@ fetch(DB_URL + "/orders.json")
 
 async function saveOffersCloud(){
   try {
-await fetch(DB_URL + "/offers.json", {
-    method: "PUT",
+    const res = await fetch(DB_URL + "/offers.json", {
+      method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(offers)
     });
+    if (!res.ok) {
+      const txt = await res.text();
+      alert("رفض الحفظ: " + res.status + " - " + txt);
+    }
   } catch (e) {
-    alert("حدث خطأ أثناء حفظ العروض على السيرفر.");
+    alert("سبب الخطأ: " + e.message);
   }
+}
 }
 
 async function saveOrdersCloud(){
