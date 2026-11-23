@@ -168,8 +168,8 @@ let orders = [];
 async function loadFromCloud(){
   try {
     const [resO, resOrd] = await Promise.all([
-      fetch(`${DB_URL}/offers.json`),
-      fetch(`${DB_URL}/orders.json`)
+     fetch(DB_URL + "/offers.json"),
+fetch(DB_URL + "/orders.json")
     ]);
     const dataO = await resO.json();
     const dataOrd = await resOrd.json();
@@ -183,8 +183,8 @@ async function loadFromCloud(){
 
 async function saveOffersCloud(){
   try {
-    await fetch(`${DB_URL}/offers.json`, {
-      method: "PUT",
+await fetch(DB_URL + "/offers.json", {
+    method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(offers)
     });
@@ -195,8 +195,8 @@ async function saveOffersCloud(){
 
 async function saveOrdersCloud(){
   try {
-    await fetch(`${DB_URL}/orders.json`, {
-      method: "PUT",
+await fetch(DB_URL + "/orders.json", {
+    method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(orders)
     });
