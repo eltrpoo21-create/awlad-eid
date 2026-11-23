@@ -144,7 +144,7 @@ footer p{color:#b3b3b3;margin-bottom:5px}footer .dev{color:#FFD700;font-weight:b
 
 <footer>
   <p><strong>مطاحن بن أولاد عيد</strong> - خبرة منذ عام ١٩٨٥ | أصل القهوة العربية في مصر</p>
-  <p>للطلبات والاستفسارات: <strong style="color:#FFD700">01061216062</strong></p>
+    <p>للطلبات والاستفسارات: <strong style="color:#FFD700">01061216062</strong></p>
   <p class="dev">تنفيذ المهندس محمد رضوان</p>
 </footer>
 
@@ -168,8 +168,8 @@ let orders = [];
 async function loadFromCloud(){
   try {
     const [resO, resOrd] = await Promise.all([
-     fetch(DB_URL + "/offers.json"),
-fetch(DB_URL + "/orders.json")
+      fetch(DB_URL + "/offers.json"),
+      fetch(DB_URL + "/orders.json")
     ]);
     const dataO = await resO.json();
     const dataOrd = await resOrd.json();
@@ -196,12 +196,11 @@ async function saveOffersCloud(){
     alert("سبب الخطأ: " + e.message);
   }
 }
-}
 
 async function saveOrdersCloud(){
   try {
-await fetch(DB_URL + "/orders.json", {
-    method: "PUT",
+    await fetch(DB_URL + "/orders.json", {
+      method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(orders)
     });
@@ -343,7 +342,7 @@ document.getElementById("fOffer").onsubmit=async e=>{
   
   const id=document.getElementById("editId").value;
   const title=oTitle.value.trim(), price=Number(oPrice.value), desc=oDesc.value.trim();
-const f=document.getElementById("oImg").files[0];
+  const f=document.getElementById("oImg").files[0];
   let img="";
   if(f) img=await compressImg(f);
 
@@ -393,3 +392,4 @@ async function doneOrd(id){
 </script>
 </body>
 </html>
+
